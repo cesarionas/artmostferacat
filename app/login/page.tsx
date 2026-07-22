@@ -17,17 +17,34 @@ function LoginForm() {
 		e.preventDefault();
 		if (loading) return;
 		setLoading(true);
-		const response = await fetch("/api/auth/login", {
-			method: "POST",
-			headers: { "Content-Type": "application/json" },
-			credentials: "include",
-			body: JSON.stringify({ email, password }),
-		});
-		setLoading(false);
-		const data = await response.json();
-		if (!response.ok) return toast.error("Não foi possível entrar", { description: data.error || "Erro ao autenticar" });
-		router.push("/admin");
-		router.refresh();
+		try {
+			const response = await fetch("/api/auth/login", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				credentials: "include",
+				body: JSON.stringify({ email, password }),
+			});
+
+			let data: any = {};
+			try {
+				data = await response.json();
+			} catch (e) {
+				console.error("Failed to parse response:", e);
+				data = { error: "Erro ao processar resposta do servidor" };
+			}
+
+			if (!response.ok) {
+				return toast.error("Não foi possível entrar", { description: data.error || "Erro ao autenticar" });
+			}
+
+			router.push("/admin");
+			router.refresh();
+		} catch (error) {
+			console.error("Login error:", error);
+			toast.error("Erro de conexão", { description: "Verifique sua conexão e tente novamente" });
+		} finally {
+			setLoading(false);
+		}
 	}
 
 	return (
