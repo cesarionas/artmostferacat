@@ -2,4 +2,7 @@ import Link from "next/link";
 import { LayoutDashboard, Users } from "lucide-react";
 import { createClient } from "@/supabase/server";
 import { redirect } from "next/navigation";
+
+export const dynamic = 'force-dynamic';
+
 export default async function AdminLayout({ children }: { children: React.ReactNode }) { const supabase = await createClient(); const { data: { user } } = await supabase.auth.getUser(); if (!user) redirect("/login"); const { data: profile } = await supabase.from("profiles").select("role").eq("id", user.id).single(); if (profile?.role !== "admin") redirect("/login?error=admin"); return <div className="min-h-screen md:grid md:grid-cols-[240px_1fr]"><aside className="border-b p-4 md:border-b-0 md:border-r"><Link href="/admin" className="text-lg font-semibold">Artmosfera <span className="text-sm font-normal text-foreground/50">Admin</span></Link><nav className="mt-8 flex gap-2 md:flex-col"><Link className="flex items-center gap-2 rounded-xl px-3 py-3 text-sm hover:bg-muted" href="/admin"><LayoutDashboard size={18}/>Dashboard</Link><Link className="flex items-center gap-2 rounded-xl px-3 py-3 text-sm hover:bg-muted" href="/admin/produtos"><Users size={18}/>Produtos</Link></nav></aside><main className="p-4 sm:p-8">{children}</main></div> }

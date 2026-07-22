@@ -4,6 +4,8 @@ import { ZoomIn } from "lucide-react";
 import { PublicHeader } from "@/components/public-header";
 import { getPerson } from "@/services/people.service";
 
+export const dynamic = 'force-dynamic';
+
 export default async function PersonPage({ params }: { params: Promise<{ slug: string }> }) {
   const person = await getPerson((await params).slug);
   if (!person) notFound();

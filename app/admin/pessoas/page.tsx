@@ -3,6 +3,8 @@ import { Plus } from "lucide-react";
 import { createClient } from "@/supabase/server";
 import { AdminPeopleTable } from "@/components/admin-people-table";
 
+export const dynamic = 'force-dynamic';
+
 export default async function AdminPeople() {
 	const supabase = await createClient();
 	const { data: people } = await supabase

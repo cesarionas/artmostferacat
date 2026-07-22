@@ -3,6 +3,8 @@ import { Catalog } from "@/features/public/catalog";
 import { getPeople } from "@/services/people.service";
 import type { Person } from "@/types/database";
 
+export const dynamic = 'force-dynamic';
+
 export default async function Home() {
 	let people: Person[] = [];
 	try {

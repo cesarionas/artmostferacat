@@ -1,6 +1,9 @@
 import { notFound } from "next/navigation";
 import { createClient } from "@/supabase/server";
 import { PersonForm } from "@/features/admin/person-form";
+
+export const dynamic = 'force-dynamic';
+
 export default async function EditPerson({ params }: { params: Promise<{ id: string }> }) {
   const supabase = await createClient();
   const [personResult, categoriesResult, productTypesResult] = await Promise.all([
