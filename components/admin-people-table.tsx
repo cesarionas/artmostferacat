@@ -18,7 +18,7 @@ export function AdminPeopleTable({ people }: Props) {
   const [deletingId, setDeletingId] = useState<string | null>(null);
 
   async function handleDelete(id: string) {
-    if (!confirm("Tem certeza que deseja excluir esta pessoa?")) return;
+    if (!confirm("Tem certeza que deseja excluir este produto?")) return;
     setDeletingId(id);
     const supabase = createClient();
     const { error } = await supabase.from("people").delete().eq("id", id);
@@ -27,7 +27,7 @@ export function AdminPeopleTable({ people }: Props) {
       toast.error("Falha ao excluir", { description: error.message });
       return;
     }
-    toast.success("Pessoa excluída com sucesso");
+    toast.success("Produto excluído com sucesso");
     router.refresh();
   }
 
@@ -46,14 +46,14 @@ export function AdminPeopleTable({ people }: Props) {
           {people?.map((person) => (
             <tr key={person.id} className="border-t">
               <td className="p-4 font-medium">
-                <Link className="hover:underline" href={`/admin/pessoas/${person.id}`}>
+                <Link className="hover:underline" href={`/admin/produtos/${person.id}`}>
                   {person.name}
                 </Link>
               </td>
               <td className="p-4">{person.status}</td>
               <td className="p-4">{new Date(person.created_at).toLocaleDateString("pt-BR")}</td>
               <td className="flex flex-wrap gap-2 p-4">
-                <Link href={`/admin/pessoas/${person.id}`} className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm hover:bg-muted">
+                <Link href={`/admin/produtos/${person.id}`} className="inline-flex items-center gap-2 rounded-xl border px-3 py-2 text-sm hover:bg-muted">
                   <Pencil size={16} /> Editar
                 </Link>
                 <Button
@@ -72,10 +72,10 @@ export function AdminPeopleTable({ people }: Props) {
       </table>
       {!people?.length && (
         <div className="space-y-4 p-10 text-center text-foreground/60">
-          <p className="text-lg font-medium text-foreground">Nenhuma pessoa cadastrada ainda.</p>
+          <p className="text-lg font-medium text-foreground">Nenhum produto cadastrado ainda.</p>
           <p className="text-sm text-foreground/70">Clique abaixo para adicionar seu primeiro produto ao catálogo.</p>
           <div className="flex justify-center">
-            <Link href="/admin/pessoas/nova" className="inline-flex items-center justify-center rounded-xl bg-primary px-5 py-3 text-sm font-medium text-background hover:opacity-90">
+            <Link href="/admin/produtos/novo" className="inline-flex items-center justify-center rounded-xl bg-primary px-5 py-3 text-sm font-medium text-background hover:opacity-90">
               Criar primeiro produto
             </Link>
           </div>

@@ -14,14 +14,14 @@ export default async function AdminPeople() {
 		<>
 			<div className="flex items-center justify-between">
 				<div>
-					<h1 className="text-3xl font-semibold">Pessoas</h1>
+					<h1 className="text-3xl font-semibold">Produtos</h1>
 					<p className="mt-1 text-foreground/60">Gerencie o catálogo.</p>
 				</div>
 				<Link
-					href="/admin/pessoas/nova"
+					href="/admin/produtos/novo"
 					className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-medium text-background"
 				>
-					<Plus size={18} /> Nova pessoa
+					<Plus size={18} /> Novo produto
 				</Link>
 			</div>
 			<AdminPeopleTable people={people ?? []} />

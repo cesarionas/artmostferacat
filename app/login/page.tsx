@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { createClient } from "@/supabase/client";
 import { Button } from "@/components/ui/button";
@@ -10,6 +10,8 @@ export default function Login() {
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
 	const router = useRouter();
+	const searchParams = useSearchParams();
+	const accessError = searchParams.get("error") === "admin";
 
 	async function submit(e: React.FormEvent) {
 		e.preventDefault();
@@ -25,6 +27,7 @@ export default function Login() {
 		const data = await response.json();
 		if (!response.ok) return toast.error("Não foi possível entrar", { description: data.error || "Erro ao autenticar" });
 		router.push("/admin");
+		router.refresh();
 	}
 
 	return (
@@ -33,6 +36,7 @@ export default function Login() {
 				<div>
 					<h1 className="text-2xl font-semibold">Acesso administrativo</h1>
 					<p className="mt-1 text-sm text-foreground/60">Use as credenciais de administrador.</p>
+					{accessError && <p role="alert" className="mt-3 rounded-lg bg-red-50 p-3 text-sm text-red-700">Este usuário não possui permissão de administrador.</p>}
 				</div>
 				<label className="block text-sm font-medium">
 					E-mail
@@ -70,4 +74,3 @@ export default function Login() {
 		</div>
 	);
 }
-

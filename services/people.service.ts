@@ -40,7 +40,7 @@ export async function getPeople(query = "", page = 0, pageSize = 12) {
 
 		if (query)
 			request = request.or(
-				`name.ilike.%${query}%,description.ilike.%${query}%,categories.name.ilike.%${query}%`
+				`name.ilike.%${query}%,description.ilike.%${query}%`
 			);
 
 		const { data, count, error } = await request;

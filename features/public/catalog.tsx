@@ -45,7 +45,7 @@ export function Catalog({ initial }: { initial: Person[] }) {
         <label className="flex h-12 flex-1 items-center gap-3 rounded-xl border bg-background px-4">
           <Search size={18} />
           <input
-            aria-label="Pesquisar pessoas"
+            aria-label="Pesquisar produtos"
             className="w-full bg-transparent outline-none"
             value={query}
             onChange={(e) => setQuery(e.target.value)}
@@ -81,10 +81,9 @@ export function Catalog({ initial }: { initial: Person[] }) {
         </div>
       ) : (
         <div className="rounded-2xl border border-dashed py-20 text-center text-foreground/60">
-          Nenhuma pessoa encontrada.
+          Nenhum produto encontrado.
         </div>
       )}
     </section>
   );
 }
-

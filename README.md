@@ -7,7 +7,7 @@ Catálogo de pessoas e acervos construído com Next.js 15, TypeScript, Tailwind 
 1. Instale Node.js 20.9+ e execute `npm install`.
 2. Copie `.env.example` para `.env.local` e preencha a URL e a chave anônima do Supabase.
 3. No SQL Editor do Supabase, execute `supabase/migrations/0001_initial.sql`.
-4. Em **Authentication > Users**, crie o usuário administrador e execute, substituindo o UUID: `insert into public.profiles (id, role) values ('UUID_DO_USUARIO', 'admin');`.
+4. Execute também `supabase/migrations/0002_create_admin_profiles.sql`. Ela cria o perfil para usuários existentes e garante o perfil de administrador para os próximos usuários criados no Supabase Auth.
 5. Execute `npm run dev`.
 
 ## Storage e segurança
