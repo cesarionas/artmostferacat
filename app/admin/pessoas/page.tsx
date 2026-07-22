@@ -1,4 +1,30 @@
 import Link from "next/link";
 import { Plus } from "lucide-react";
 import { createClient } from "@/supabase/server";
-export default async function AdminPeople() { const supabase = await createClient(); const { data: people } = await supabase.from("people").select("id,name,status,created_at").order("created_at", { ascending: false }); return <><div className="flex items-center justify-between"><div><h1 className="text-3xl font-semibold">Pessoas</h1><p className="mt-1 text-foreground/60">Gerencie o catálogo.</p></div><Link href="/admin/pessoas/nova" className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-medium text-background"><Plus size={18}/>Nova pessoa</Link></div><div className="mt-8 overflow-hidden rounded-2xl border"><table className="w-full text-left text-sm"><thead className="bg-muted text-foreground/60"><tr><th className="p-4 font-medium">Nome</th><th className="p-4 font-medium">Status</th><th className="p-4 font-medium">Criado em</th></tr></thead><tbody>{people?.map(person=><tr key={person.id} className="border-t"><td className="p-4 font-medium"><Link className="hover:underline" href={`/admin/pessoas/${person.id}`}>{person.name}</Link></td><td className="p-4">{person.status}</td><td className="p-4">{new Date(person.created_at).toLocaleDateString("pt-BR")}</td></tr>)}</tbody></table>{!people?.length && <p className="p-10 text-center text-foreground/60">Nenhuma pessoa cadastrada.</p>}</div></> }
+import { AdminPeopleTable } from "@/components/admin-people-table";
+
+export default async function AdminPeople() {
+	const supabase = await createClient();
+	const { data: people } = await supabase
+		.from("people")
+		.select("id,name,status,created_at")
+		.order("created_at", { ascending: false });
+
+	return (
+		<>
+			<div className="flex items-center justify-between">
+				<div>
+					<h1 className="text-3xl font-semibold">Pessoas</h1>
+					<p className="mt-1 text-foreground/60">Gerencie o catálogo.</p>
+				</div>
+				<Link
+					href="/admin/pessoas/nova"
+					className="inline-flex min-h-11 items-center gap-2 rounded-xl bg-primary px-4 text-sm font-medium text-background"
+				>
+					<Plus size={18} /> Nova pessoa
+				</Link>
+			</div>
+			<AdminPeopleTable people={people ?? []} />
+		</>
+	);
+}
